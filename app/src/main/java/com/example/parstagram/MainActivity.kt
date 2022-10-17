@@ -13,6 +13,7 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import com.parse.*
@@ -27,12 +28,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val loading = findViewById<ProgressBar>(R.id.pbLoading)
+
         findViewById<Button>(R.id.btnSubmit).setOnClickListener{
             val description = findViewById<EditText>(R.id.etDescription).text.toString()
             val user = ParseUser.getCurrentUser()
             if (photoFile != null) {
                 Toast.makeText(this@MainActivity, "Successfully made post", Toast.LENGTH_SHORT).show()
+                loading.setVisibility(ProgressBar.VISIBLE)
                 submitPost(description, user, photoFile!!)
+                findViewById<EditText>(R.id.etDescription).text.clear()
+                loading.setVisibility(ProgressBar.INVISIBLE)
             } else {
                 Toast.makeText(this@MainActivity, "Please take a photo", Toast.LENGTH_SHORT).show()
             }
