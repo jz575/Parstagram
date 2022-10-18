@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
@@ -38,7 +39,13 @@ class MainActivity : AppCompatActivity() {
                 loading.setVisibility(ProgressBar.VISIBLE)
                 submitPost(description, user, photoFile!!)
                 findViewById<EditText>(R.id.etDescription).text.clear()
-                loading.setVisibility(ProgressBar.INVISIBLE)
+                //creates a delay so loading bar is visible for at least 1 second
+                val handler = Handler()
+                handler.postDelayed(object: Runnable {
+                    override fun run() {
+                        loading.setVisibility(ProgressBar.INVISIBLE)
+                    }
+                }, 1000)
             } else {
                 Toast.makeText(this@MainActivity, "Please take a photo", Toast.LENGTH_SHORT).show()
             }
