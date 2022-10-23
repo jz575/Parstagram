@@ -1,28 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_home"
         android:enabled="true"
         android:icon="@drawable/baseline_home_20"
-        android:title="Home"/>
-    <item
-        android:id="@+id/nav_search"
-        android:enabled="true"
-        android:icon="@drawable/baseline_search_20"
-        android:title="Search"/>
+        android:title="Home"
+        app:showAsAction="always" />
     <item
         android:id="@+id/nav_add"
         android:enabled="true"
         android:icon="@drawable/baseline_add_box_24"
-        android:title="Add"/>
-    <item
-        android:id="@+id/nav_fav"
-        android:enabled="true"
-        android:icon="@drawable/baseline_favorite_border_24"
-        android:title="Favorite"/>
+        android:title="Add"
+        app:showAsAction="always"/>
     <item
         android:id="@+id/nav_profile"
         android:enabled="true"
         android:icon="@drawable/baseline_person_outline_18"
-        android:title="Profile"/>
+        android:title="Profile"
+        app:showAsAction="always"/>
 </menu>
