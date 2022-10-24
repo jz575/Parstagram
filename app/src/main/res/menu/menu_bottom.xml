@@ -5,18 +5,21 @@
         android:id="@+id/nav_home"
         android:enabled="true"
         android:icon="@drawable/baseline_home_20"
-        android:title="Home"
-        app:showAsAction="always" />
+        android:title="Home" />
     <item
         android:id="@+id/nav_add"
         android:enabled="true"
         android:icon="@drawable/baseline_add_box_24"
-        android:title="Add"
-        app:showAsAction="always"/>
+        android:title="Add" />
     <item
         android:id="@+id/nav_profile"
         android:enabled="true"
         android:icon="@drawable/baseline_person_outline_18"
-        android:title="Profile"
-        app:showAsAction="always"/>
+        android:title="Profile" />
+    <item
+        android:id="@+id/nav_picture"
+        android:icon="@drawable/ic_baseline_person_add_alt_24"
+        android:title="Add Profile Picture"
+        app:showAsAction="always"
+        />
 </menu>

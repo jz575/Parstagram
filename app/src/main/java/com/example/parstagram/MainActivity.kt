@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         val homeFragment : Fragment = HomeFragment()
         val composeFragment: Fragment = ComposeFragment()
         val profileFragment: Fragment = ProfileFragment()
+        val pictureFragment: Fragment = PictureFragment()
 
         val bottomNavigationView: BottomNavigationView = findViewById<BottomNavigationView>(R.id.menu_bottom)
 
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home -> fragment = homeFragment
                 R.id.nav_add -> fragment = composeFragment
                 R.id.nav_profile -> fragment = profileFragment
+                R.id.nav_picture -> fragment = pictureFragment
             }
             fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit()
             true
@@ -62,10 +64,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_profile) {
-            var fragment = PictureFragment()
-            supportFragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit()
-        }
         if (item.itemId == R.id.menu_logout) {
             ParseUser.logOut()
             val intent = Intent(this@MainActivity, LoginActivity::class.java)
