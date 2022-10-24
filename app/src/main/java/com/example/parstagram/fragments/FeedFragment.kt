@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.parstagram.Post
 import com.example.parstagram.PostAdapter
 import com.example.parstagram.R
@@ -15,12 +16,13 @@ import com.parse.FindCallback
 import com.parse.ParseException
 import com.parse.ParseQuery
 
-private val TAG = "HomeFragment"
+private val TAG = "FeedFragment"
 open class HomeFragment : Fragment() {
 
     lateinit var rvPosts: RecyclerView
     lateinit var adapter: PostAdapter
     var allPosts: MutableList<Post> = mutableListOf()
+    lateinit var swipeContainer: SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +40,12 @@ open class HomeFragment : Fragment() {
         rvPosts.adapter = adapter
         rvPosts.layoutManager = LinearLayoutManager(requireContext())
 
+        swipeContainer = view.findViewById<SwipeRefreshLayout>(R.id.swipeContainer)
+        swipeContainer.setOnRefreshListener {
+            Log.i(TAG, "Refreshing feed")
+            queryPosts()
+        }
+
         queryPosts()
     }
 
@@ -53,11 +61,13 @@ open class HomeFragment : Fragment() {
                     Log.e(TAG, "Error fetching posts")
                 } else {
                     if(posts != null) {
+                        allPosts.clear()
                         for(post in posts) {
                             Log.i(TAG,"Post:" + post.getDescription())
                         }
                         allPosts.addAll(posts)
                         adapter.notifyDataSetChanged()
+                        swipeContainer.isRefreshing = false
                     }
                 }
             }

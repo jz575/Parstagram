@@ -1,19 +1,13 @@
 package com.example.parstagram.fragments
 
-import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.example.parstagram.Post
-import com.example.parstagram.R
 import com.parse.FindCallback
 import com.parse.ParseException
 import com.parse.ParseQuery
 import com.parse.ParseUser
 
-private val TAG = "ProfileFragment"
+private val TAG = "PersonalFeedFragment"
 class ProfileFragment : HomeFragment() {
 
     override fun queryPosts(){
@@ -34,6 +28,7 @@ class ProfileFragment : HomeFragment() {
                         }
                         allPosts.addAll(posts)
                         adapter.notifyDataSetChanged()
+                        swipeContainer.isRefreshing = false
                     }
                 }
             }
