@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.parstagram.fragments.ComposeFragment
 import com.example.parstagram.fragments.HomeFragment
+import com.example.parstagram.fragments.PictureFragment
 import com.example.parstagram.fragments.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.parse.*
@@ -61,6 +62,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_profile) {
+            var fragment = PictureFragment()
+            supportFragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit()
+        }
         if (item.itemId == R.id.menu_logout) {
             ParseUser.logOut()
             val intent = Intent(this@MainActivity, LoginActivity::class.java)

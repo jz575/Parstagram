@@ -21,10 +21,8 @@ import com.parse.ParseFile
 import com.parse.ParseUser
 import java.io.File
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private val TAG = "ComposeFragment"
-class ComposeFragment : Fragment() {
+open class ComposeFragment : Fragment() {
     val CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034
     val photoFileName = "photo.jpg"
     var photoFile: File? = null
