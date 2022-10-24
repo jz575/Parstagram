@@ -42,8 +42,7 @@ class PictureFragment : ComposeFragment() {
         val user = ParseUser.getCurrentUser()
         view.findViewById<Button>(R.id.btnSubmit).setOnClickListener{
             if (photoFile != null) {
-                if(user != null) setPfp(user, photoFile!!)
-                else Log.e(TAG, "User is null")
+                setPfp(user, photoFile!!)
             } else {
                 Toast.makeText(requireContext(), "Please take a photo", Toast.LENGTH_SHORT).show()
             }
@@ -81,11 +80,27 @@ class PictureFragment : ComposeFragment() {
                 if (uri != null){
                     val selectedImage = uriToBitmap(uri)
                     ivPhoto.setImageBitmap(selectedImage)
+                    photoFile = uriToImageFile(uri)
+                    setPfp(ParseUser.getCurrentUser(), photoFile!!)
                 }
             } else {
                 Toast.makeText(requireContext(), "Problem picking picture", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+    private fun uriToImageFile(uri: Uri): File? {
+        val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = requireContext().contentResolver.query(uri, filePathColumn, null, null, null)
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                val columnIndex = cursor.getColumnIndex(filePathColumn[0])
+                val filePath = cursor.getString(columnIndex)
+                cursor.close()
+                return File(filePath)
+            }
+            cursor.close()
+        }
+        return null
     }
     private fun uriToBitmap(uri: Uri): Bitmap {
         return MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
