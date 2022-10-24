@@ -23,6 +23,7 @@ class ProfileFragment : HomeFragment() {
                     Log.e(TAG, "Error fetching posts")
                 } else {
                     if(posts != null) {
+                        allPosts.clear()
                         for(post in posts) {
                             Log.i(TAG,"Post:" + post.getDescription())
                         }
