@@ -15,6 +15,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toFile
 import com.example.parstagram.R
 import com.parse.FindCallback
 import com.parse.GetCallback
@@ -42,7 +43,8 @@ class PictureFragment : ComposeFragment() {
         val user = ParseUser.getCurrentUser()
         view.findViewById<Button>(R.id.btnSubmit).setOnClickListener{
             if (photoFile != null) {
-                setPfp(user, photoFile!!)
+                Log.i(TAG, photoFile!!.absolutePath.toString())
+                setPfp(user, photoFile!!.absoluteFile)
             } else {
                 Toast.makeText(requireContext(), "Please take a photo", Toast.LENGTH_SHORT).show()
             }
@@ -52,7 +54,7 @@ class PictureFragment : ComposeFragment() {
         }
         view.findViewById<Button>(R.id.btnPick).setOnClickListener{
             var intent: Intent = Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             intent.setType("image/*");
             intent.putExtra("crop", "true")
             intent.putExtra("scale", true)
@@ -81,7 +83,6 @@ class PictureFragment : ComposeFragment() {
                     val selectedImage = uriToBitmap(uri)
                     ivPhoto.setImageBitmap(selectedImage)
                     photoFile = uriToImageFile(uri)
-                    setPfp(ParseUser.getCurrentUser(), photoFile!!)
                 }
             } else {
                 Toast.makeText(requireContext(), "Problem picking picture", Toast.LENGTH_SHORT).show()
@@ -106,7 +107,8 @@ class PictureFragment : ComposeFragment() {
         return MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
     }
     fun setPfp(user: ParseUser, picture: File){
-        user.put("profilePicture", ParseFile(picture))
+        val pFile = ParseFile(picture)
+        user.put("profilePicture", pFile)
         user.saveInBackground { e ->
             if (e != null) {
                 Log.e(TAG, e.printStackTrace().toString())
